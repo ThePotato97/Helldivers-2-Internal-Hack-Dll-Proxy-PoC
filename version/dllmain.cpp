@@ -92,6 +92,8 @@ DWORD WINAPI Payload(LPVOID lpParam)
         , {"No Stationary Turret Overheat", false}
         , {"No Backpack Shield Cooldown", false}
         , {"No JetPack Cooldown", false}
+        , {"Show All Stratagems", false}
+        , {"Show All Equipment", false}
     
     }; // Initialize all checkboxes to unchecked
     const int numCheckboxes = checkboxes.size();
@@ -554,6 +556,30 @@ DWORD WINAPI Payload(LPVOID lpParam)
                 }
             }
 
+            if (checkboxes[i].title == "Show All Stratagems")
+            {
+                if (!gData.AllStratagems)
+                {
+                    uintptr_t ShowAllStratagemsAddr = 0x180B7B690;
+                    BYTE ShowAllStratagemsByte[] = { 0xB0, 0x01, 0xC3 };
+                    gData.AllStratagems = !gData.AllStratagems;
+                    Memory::Patch((LPVOID)(ShowAllStratagemsAddr), ShowAllStratagemsByte, 3);
+                    printf("[Active] Show All Stratagems\n");
+                }
+            }
+
+            if (checkboxes[i].title == "Show All Equipment")
+            {
+                if (!gData.AllEquipment)
+                {
+                    uintptr_t ShowAllEquipmentAddr = 0x180BB4AC0;
+                    BYTE ShowAllEquipmentByte[] = { 0xB0, 0x01, 0xC3 };
+                    gData.AllEquipment = !gData.AllEquipment;
+                    Memory::Patch((LPVOID)(ShowAllEquipmentAddr), ShowAllEquipmentByte, 3);
+                    printf("[Active] Show All Equipment\n");
+                }
+            }
+            
             /*if (checkboxes[i].title == "One / Two Hit Kill ( Bile Titan Bug, Aim Only Head )")
             {
                 if (!gData.OHK)
