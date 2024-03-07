@@ -27,4 +27,5 @@ class GameData
 		bool	ShowAllMapIcons = false;
 		bool	AllStratagems = false;
 		bool	AllEquipment = false;
+		bool	AllArmor = false;
 };

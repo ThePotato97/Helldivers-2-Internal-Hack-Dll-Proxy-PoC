@@ -94,6 +94,7 @@ DWORD WINAPI Payload(LPVOID lpParam)
         , {"No JetPack Cooldown", false}
         , {"Show All Stratagems", false}
         , {"Show All Equipment", false}
+        , {"Show All Armor", false}
     
     }; // Initialize all checkboxes to unchecked
     const int numCheckboxes = checkboxes.size();
@@ -577,6 +578,17 @@ DWORD WINAPI Payload(LPVOID lpParam)
                     gData.AllEquipment = !gData.AllEquipment;
                     Memory::Patch((LPVOID)(ShowAllEquipmentAddr), ShowAllEquipmentByte, 3);
                     printf("[Active] Show All Equipment\n");
+                }
+            }
+            if (checkboxes[i].title == "Show All Armor")
+            {
+                if (!gData.AllArmor)
+                {
+                    uintptr_t ShowAllArmorAddr = 0x180A91290;
+                    BYTE ShowAllArmorByte[] = { 0xB0, 0x01, 0xC3 };
+                    gData.AllArmor = !gData.AllArmor;
+                    Memory::Patch((LPVOID)(ShowAllArmorAddr), ShowAllArmorByte, 3);
+                    printf("[Active] Show All Armor\n");
                 }
             }
             
