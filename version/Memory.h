@@ -51,6 +51,33 @@ namespace Memory
 		return 0;
 	}
 
+	uintptr_t FindAddress(const char* moduleName, uintptr_t addressOffset) {
+		// Get the base address of the module
+		HMODULE moduleHandle = GetModuleHandleA(moduleName);
+		if (!moduleHandle) {
+			std::cerr << "Failed to get module handle." << std::endl;
+			return 0;
+		}
+
+		MODULEINFO moduleInfo;
+		if (!GetModuleInformation(GetCurrentProcess(), moduleHandle, &moduleInfo, sizeof(moduleInfo))) {
+			std::cerr << "Failed to get module information." << std::endl;
+			return 0;
+		}
+    
+		uintptr_t moduleBase = reinterpret_cast<uintptr_t>(moduleInfo.lpBaseOfDll);
+		uintptr_t targetAddress = moduleBase + addressOffset;
+
+		// Optional: Check if the target address is within the module's range
+		if (targetAddress < moduleBase || targetAddress >= moduleBase + moduleInfo.SizeOfImage) {
+			std::cerr << "Address offset is out of the module's range." << std::endl;
+			return 0;
+		}
+
+		return targetAddress;
+	}
+
+
 	void Nop(LPVOID dst, unsigned int size)
 	{
 		DWORD oldprotect;

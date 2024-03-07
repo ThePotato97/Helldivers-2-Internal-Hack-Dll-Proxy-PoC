@@ -561,7 +561,7 @@ DWORD WINAPI Payload(LPVOID lpParam)
             {
                 if (!gData.AllStratagems)
                 {
-                    uintptr_t ShowAllStratagemsAddr = 0x180B7B690;
+                    uintptr_t ShowAllStratagemsAddr = Memory::FindAddress("game.dll", 0xB7B690);
                     BYTE ShowAllStratagemsByte[] = { 0xB0, 0x01, 0xC3 };
                     gData.AllStratagems = !gData.AllStratagems;
                     Memory::Patch((LPVOID)(ShowAllStratagemsAddr), ShowAllStratagemsByte, 3);
@@ -573,7 +573,7 @@ DWORD WINAPI Payload(LPVOID lpParam)
             {
                 if (!gData.AllEquipment)
                 {
-                    uintptr_t ShowAllEquipmentAddr = 0x180BB4AC0;
+                    uintptr_t ShowAllEquipmentAddr = Memory::FindAddress("game.dll", 0xBB4AC0);
                     BYTE ShowAllEquipmentByte[] = { 0xB0, 0x01, 0xC3 };
                     gData.AllEquipment = !gData.AllEquipment;
                     Memory::Patch((LPVOID)(ShowAllEquipmentAddr), ShowAllEquipmentByte, 3);
@@ -584,7 +584,7 @@ DWORD WINAPI Payload(LPVOID lpParam)
             {
                 if (!gData.AllArmor)
                 {
-                    uintptr_t ShowAllArmorAddr = 0x180A91290;
+                    uintptr_t ShowAllArmorAddr = Memory::FindAddress("game.dll", 0xA91290);
                     BYTE ShowAllArmorByte[] = { 0xB0, 0x01, 0xC3 };
                     gData.AllArmor = !gData.AllArmor;
                     Memory::Patch((LPVOID)(ShowAllArmorAddr), ShowAllArmorByte, 3);
